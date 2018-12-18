@@ -26,6 +26,12 @@
 package com.imooc.web.controller.house;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.imooc.base.ApiResponse;
+import com.imooc.service.ServiceMultiResult;
 
 /**   
  * @ClassName:  HouseController   
@@ -38,5 +44,28 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class HouseController {
+	/**
+	 * 获取支持城市列表
+	 * 
+	 * @return
+	 */
+	@GetMapping("address/support/cities")
+	@ResponseBody
+	public ApiResponse getSupportCities() {
+	 
+		return  null;
+	}
 
+	/**
+	 * 获取对应城市支持区域列表
+	 * 
+	 * @param cityEnName
+	 * @return
+	 */
+	@GetMapping("address/support/regions")
+	@ResponseBody
+	public ApiResponse getSupportRegions(@RequestParam(name = "city_name") String cityEnName) {
+		 
+		return null;
+	}
 }
