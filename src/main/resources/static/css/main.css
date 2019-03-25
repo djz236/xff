@@ -102,7 +102,9 @@ body {
     height: 55px;
     background-image: url(/static/images/logo_bg.jpg);
     width: 100px;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%
 }
 
 .xunwu-header .nav {

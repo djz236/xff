@@ -24,7 +24,8 @@
 		<thymeleaf-extras-springsecurity4.version>3.0.2.RELEASE</thymeleaf-extras-springsecurity4.version>
 	</properties>
 
-	<dependencies>
+	 <dependencies>
+	
 		<!-- jpa相关依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
