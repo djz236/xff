@@ -76,7 +76,7 @@ public class LoginUrlEntryPoint extends LoginUrlAuthenticationEntryPoint{
 	@Override
 	protected String determineUrlToUseForThisRequest(HttpServletRequest request,
 			HttpServletResponse response, AuthenticationException exception) {
-		
+		 
 		String uri = request.getRequestURI().replace(
 				request.getContextPath(), "");
 		for(Entry<String,String> authEntry:this.authEntryPointMap.entrySet()){
