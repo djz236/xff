@@ -2,7 +2,6 @@ package com.imooc.config;
  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import com.imooc.security.AuthProvider;
+import com.imooc.security.LoginAuthFailHandler;
+import com.imooc.security.LoginUrlEntryPoint;
  
 /**   
  * @ClassName:  WebSecurityConfig   
@@ -45,13 +46,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login") // 配置角色登录处理入口
+              //  .failureHandler(authFailHandler())//登陆失败的相应
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/logout/page")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .and();
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(urlEntryPoint())
+                .accessDeniedPage("/403");
 
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
@@ -68,13 +73,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configGloable (AuthenticationManagerBuilder auth) throws Exception{
     	//auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN").and();
-    	auth.authenticationProvider( authProvider()).eraseCredentials(true);
+    	auth.authenticationProvider( authProvider()).eraseCredentials(false);
     }
     @Bean
     public AuthProvider authProvider() {
         return new AuthProvider();
-    }
-  /*  @Bean
+    }/*
+  @Bean
     public AuthenticationManager authenticationManager() {
         AuthenticationManager authenticationManager = null;
         try {
@@ -84,6 +89,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
         return authenticationManager;
     }*/
-    
+    /**   
+     * @Title: urlEntryPoint   
+     * @Description: TODO(这里用一句话描述这个方法的作用)   
+     * @param: @return      
+     * @return: LoginUrlEntryPoint      
+     * @throws   
+     */
+    @Bean
+    public LoginUrlEntryPoint urlEntryPoint(){
+    	return new LoginUrlEntryPoint("/user/login");
+    }
+    /**   
+     * @Title: authFailHandler   
+     * @Description: TODO(这里用一句话描述这个方法的作用)   
+     * @param: @return      
+     * @return: LoginAuthFailHandler      
+     * @throws   
+     */
+   /* @Bean
+    public LoginAuthFailHandler authFailHandler(){
+    	return new LoginAuthFailHandler(urlEntryPoint());
+    }*/
  
 }
